@@ -1,47 +1,109 @@
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Pacote Completo ENEM</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f2f2f2; color: #333; }
-    .container { max-width: 800px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    h1 { color: #d32f2f; }
-    h2 { color: #388e3c; }
-    p { line-height: 1.6; }
-    .price { font-size: 1.4em; margin: 10px 0; }
-    .price del { color: red; margin-right: 10px; }
-    input, button { padding: 10px; margin: 10px 0; width: 100%; border-radius: 5px; border: 1px solid #ccc; }
-    button { background: #388e3c; color: #fff; border: none; cursor: pointer; font-size: 1.1em; }
-    button:hover { background: #2e7d32; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Pacote Completo ENEM - Promoção Especial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        #checkout {
+            display: none;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📘 Pacote Completo ENEM</h1>
-    <p>Inclui:</p>
-    <ul>
-      <li>🧠 4 Cadernos Teóricos</li>
-      <li>✍️ 4 Cadernos de Exercícios</li>
-      <li>📝 1 Caderno de Redação</li>
-    </ul>
-    <p class="price"><del>R$129,90</del> <strong>R$99,90 com cupom de afiliado</strong></p>
-    <label for="cupom">Digite o cupom do afiliado para validar o desconto:</label>
-    <input type="text" id="cupom" placeholder="Ex: joao50" required>
-    <button onclick="comprar()">Comprar agora com desconto</button>
-  </div>
-  <script>
-    function comprar() {
-      const cupom = document.getElementById('cupom').value.trim();
-      if (!cupom) {
-        alert('Por favor, insira o cupom do afiliado.');
-        return;
-      }
-      const link = "https://mpago.la/2755r21"; // Link fixo, o cupom é apenas para controle interno
-      window.location.href = link;
-    }
-  </script>
+    <div class="container">
+        <h1>Pacote ENEM Completo - Promoção Limitada!</h1>
+        <p>O pacote contém 4 cadernos de teoria, 4 cadernos de exercícios e 1 caderno exclusivo de redação. Tudo por apenas <strong>R$129,90</strong>. Mas com o cupom do seu afiliado, sai por <strong>R$99,90</strong>!</p>
+
+        <form id="formulario">
+            <label for="nome">Nome (obrigatório):</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail (opcional):</label>
+            <input type="email" id="email" name="email">
+
+            <label for="cupom">Cupom do afiliado (obrigatório):</label>
+            <input type="text" id="cupom" name="cupom" required>
+
+            <button type="submit">Liberar Desconto</button>
+        </form>
+
+        <div id="checkout">
+            <h2>Pagamento com Desconto:</h2>
+            <a href="https://mpago.la/2755r21" target="_blank">
+                <button>Comprar por R$99,90</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("formulario").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const cupom = document.getElementById("cupom").value;
+
+            if (!nome || !cupom) {
+                alert("Por favor, preencha os campos obrigatórios.");
+                return;
+            }
+
+            fetch("https://formsubmit.co/ajax/suporte.lojadoguto@gmail.com", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Nome: nome, Email: email, Cupom: cupom })
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("checkout").style.display = "block";
+                    alert("Cupom aplicado! Role para baixo e finalize sua compra.");
+                } else {
+                    alert("Erro ao enviar o formulário. Tente novamente.");
+                }
+            })
+            .catch(() => alert("Erro na conexão."));
+        });
+    </script>
 </body>
 </html>
